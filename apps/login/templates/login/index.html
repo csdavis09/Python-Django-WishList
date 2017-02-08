@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Login | Registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+    <style media="screen">
+      p.error_red{
+        color: red;
+      }
+      p.success_green{
+        color:green;
+      }
+      h4, form, div.register, div.login{
+        display: inline-block;
+        vertical-align: top;
+      }
+      div.register, div.login{
+        margin: 10px 5px;
+        padding: 5px;
+        border: solid black 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="errors">
+      {% if messages %}
+        {% for message in messages %}
+          <p class="error_red">{{ message }}</p>
+        {% endfor %}
+      {% endif %}
+    </div>
+    <h1>Welcome!</h1>
+  <div class="register">
+    <h4>Registration</h4><br>
+    <form class="register" action="{% url 'login:process_login' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="process" value="register">
+      <label for="first_name">First Name: <input type="text" name="first_name" placeholder="John"></label>
+      <label for="last_name">Last Name: <input type="text" name="last_name" placeholder="Smith"></label>
+      <label for="user_name">User Name: <input type="text" name="user_name" placeholder="Ninja3000"></label>
+      <label for="email">Email: <input type="email" name="email" placeholder="name@example.net"></label>
+      <label for="password">Password (At least 8 characters): <input type="text" name="password" placeholder="********"></label>
+      <p>*Password shuld be at least 8 characters</p>
+      <label for="pw_confirm">Confirm Password: <input type="text" name="pw_confirm" placeholder="*********"></label>
+      <!-- <label for="date_hired">Date Hired: <input type="date" name="date_hired"></label> -->
+      <input class="button button-primary" type="submit" name="submit" value="Register">
+    </form>
+  </div>
+  <div class="login">
+    <h4>Login</h4><br>
+    <form class="register" action="{% url 'login:process_login' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="process" value="login">
+      <label for="email">Email: <input type="email" name="email" placeholder="name@example.net"></label>
+      <label for="password">Password (At least 8 characters): <input type="text" name="password" placeholder="********"></label>
+      <input type="submit" name="submit" value="Login">
+    </form>
+  </div>
+
+  </body>
+</html>

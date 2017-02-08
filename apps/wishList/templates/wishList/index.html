@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My Wish List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+    <link rel="stylesheet" href="static/wishList/index-style.css">
+  </head>
+  <nav>
+    <h3>Hello, {{ name.first_name }}!</h3>
+    <a class = "button button-primary" href="{% url 'wishList:logout' %}">Logout</a>
+  </nav>
+  <body>
+    <div class="messages">
+      {% if messages %}
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      {% endif %}
+    </div>
+<h5>Your Wish List:</h5>
+<table class="user_table">
+  <tr>
+    <th>Item</th>
+    <th>Added by</th>
+    <th>Date Added</th>
+    <th>Action</th>
+  </tr>
+  {% for item in user_items %}
+  <tr>
+    <td><a href="{% url 'wishList:wish_item' item.id %}">{{ item.item }}</a></td>
+    <td>{{ item.created_by.first_name }}</td>
+    <td>{{ item.created_at }}</td>
+    {% if item.created_by.id != name.id %}
+    <td><a class="button" href="{% url 'wishList:remove_item' item.id %}">Remove from my Wishlist</a></td>
+    {% elif item.created_by.id == name.id %}
+    <form class="delete" action="{% url 'wishList:delete_item' item.id %}" method="post">
+      {% csrf_token %}
+      <td><input type="submit" name="submit" value="Delete"></td>
+    </form>
+    {% endif %}
+  </tr>
+  {% endfor %}
+</table>
+<h5>Other User's Wish List</h5>
+<table class="all_table">
+  <tr>
+    <th>Item</th>
+    <th>Added by</th>
+    <th>Date Added</th>
+    <th>Action</th>
+  </tr>
+  {% for wish in other_items %}
+  <tr>
+    <td>{{ wish.item }}</td>
+    <td>{{ wish.created_by.first_name }}</td>
+    <td>{{ wish.created_at }}</td>
+    <td><a class="button" href="{% url 'wishList:update_list' wish.id %}">Add to my Wishlist</a></td>
+  {% endfor %}
+  </tr>
+</table>
+<a class="button button-primary" id="add_item" href="{% url 'wishList:new_item' %}">Add Item</a>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Create Item</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+    <style media="screen">
+      a#home{
+        margin-right: 15px;
+        margin-left: 600px;
+      }
+      body{
+        padding: 10px 50px;
+      }
+      .messages{
+        color: green;
+      }
+    </style>
+  </head>
+  <nav>
+    <a class = "button" id="home" href="{% url 'wishList:dashboard' %}">Home</a>
+    <a class = "button button-primary" href="{% url 'wishList:logout' %}">Logout</a>
+  </nav>
+  <body>
+    <div class="messages">
+      {% if messages %}
+        {% for message in messages %}
+          {{ message}}
+        {% endfor %}
+      {% endif %}
+    </div>
+    <form class="add_item" action="{% url 'wishList:add_item' %}" method="post">
+      {% csrf_token %}
+    <label for="item">Item/Product: <input type="text" name="item"></label>
+    <input type="submit" name="submit" value="Add">
+    </form>
+  </body>
+</html>

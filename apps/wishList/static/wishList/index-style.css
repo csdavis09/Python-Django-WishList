@@ -1,0 +1,18 @@
+h3{
+  display: inline-block;
+  margin-right: 600px;
+}
+.user_table,
+.all_table {
+  width: 75%;
+  margin-bottom: 50px;
+}
+.messages {
+  color: green;
+}
+nav{
+  margin-bottom: 45px;
+}
+table, tr{
+  border: solid black 3px;
+}
